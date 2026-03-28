@@ -1,39 +1,39 @@
-# ⚡ Priority Task Dispatcher
+# Priority Task Dispatcher
 
 An intelligent task prioritization and dispatching system that uses machine learning to automatically score, rank, and route tasks to the right workers — maximizing throughput and minimizing critical delays.
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart TD
-    A[📥 Task Ingestion\nREST API / Webhooks / Queue] --> B[Task Parser\nValidation + Normalization]
-    B --> C[Feature Extractor\nDeadline / Complexity / Dependencies]
-    C --> D[ML Priority Scorer\nGradient Boosting / Neural Net]
-    D --> E[Priority Score\n0.0 → 1.0]
-    
-    E --> F[Priority Queue\nHeap-based Scheduler]
-    
-    F --> G{Dispatcher Logic}
-    G -->|High Priority| H[🔴 Critical Worker Pool\nDedicated Resources]
-    G -->|Medium Priority| I[🟡 Standard Worker Pool\nCelery Workers]
-    G -->|Low Priority| J[🟢 Background Pool\nDeferred Execution]
-    
-    H --> K[Task Executor]
-    I --> K
-    J --> K
-    
-    K --> L{Task Result}
-    L -- Success --> M[✅ Completion Handler\nCallback + Notify]
-    L -- Failure --> N[🔁 Retry Manager\nExp. Backoff]
-    N --> F
-    
-    M --> O[(📊 PostgreSQL\nTask History + Metrics)]
-    K --> P[(Redis\nReal-time Queue State)]
-    
-    O --> Q[📈 Analytics Dashboard\nThroughput + SLA Tracking]
+ A[ Task Ingestion\nREST API / Webhooks / Queue] --> B[Task Parser\nValidation + Normalization]
+ B --> C[Feature Extractor\nDeadline / Complexity / Dependencies]
+ C --> D[ML Priority Scorer\nGradient Boosting / Neural Net]
+ D --> E[Priority Score\n0.0 → 1.0]
+ 
+ E --> F[Priority Queue\nHeap-based Scheduler]
+ 
+ F --> G{Dispatcher Logic}
+ G -->|High Priority| H[ Critical Worker Pool\nDedicated Resources]
+ G -->|Medium Priority| I[ Standard Worker Pool\nCelery Workers]
+ G -->|Low Priority| J[ Background Pool\nDeferred Execution]
+ 
+ H --> K[Task Executor]
+ I --> K
+ J --> K
+ 
+ K --> L{Task Result}
+ L -- Success --> M[ Completion Handler\nCallback + Notify]
+ L -- Failure --> N[ Retry Manager\nExp. Backoff]
+ N --> F
+ 
+ M --> O[( PostgreSQL\nTask History + Metrics)]
+ K --> P[(Redis\nReal-time Queue State)]
+ 
+ O --> Q[ Analytics Dashboard\nThroughput + SLA Tracking]
 ```
 
-##  Features
+## Features
 
 - ML-powered priority scoring based on deadline, complexity, and context
 - Multi-tiered worker pools (critical / standard / background)
@@ -45,7 +45,7 @@ flowchart TD
 - REST API and webhook ingestion
 - Pluggable executor backends (Celery, RQ, threading, subprocess)
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -59,7 +59,7 @@ flowchart TD
 | Messaging | Redis Pub/Sub |
 | Monitoring | Prometheus + Alertmanager |
 
-##  How to Run
+## How to Run
 
 ```bash
 # 1. Clone and install
@@ -72,7 +72,7 @@ cp .env.example .env
 # Set DATABASE_URL, REDIS_URL, etc.
 
 # 3. Start infrastructure
-docker-compose up -d   # PostgreSQL + Redis
+docker-compose up -d # PostgreSQL + Redis
 
 # 4. Initialize database
 python manage.py migrate
@@ -92,30 +92,30 @@ celery -A dispatcher.tasks worker --loglevel=info --concurrency=8
 streamlit run dashboard.py
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 priority-task-dispatcher/
 ├── dispatcher/
-│   ├── api.py              # FastAPI endpoints
-│   ├── scheduler.py        # Priority queue + dispatch logic
-│   ├── executor.py         # Task execution layer
-│   ├── retry.py            # Retry + dead-letter handling
-│   └── tasks.py            # Celery task definitions
+│ ├── api.py # FastAPI endpoints
+│ ├── scheduler.py # Priority queue + dispatch logic
+│ ├── executor.py # Task execution layer
+│ ├── retry.py # Retry + dead-letter handling
+│ └── tasks.py # Celery task definitions
 ├── ml/
-│   ├── feature_extractor.py# Task feature engineering
-│   ├── priority_model.py   # ML scoring model
-│   └── trainer.py          # Model training pipeline
-├── dashboard.py            # Real-time Streamlit dashboard
-├── train_model.py          # Training CLI
-├── manage.py               # DB migrations + management
-├── checkpoints/            # Saved model weights
+│ ├── feature_extractor.py# Task feature engineering
+│ ├── priority_model.py # ML scoring model
+│ └── trainer.py # Model training pipeline
+├── dashboard.py # Real-time Streamlit dashboard
+├── train_model.py # Training CLI
+├── manage.py # DB migrations + management
+├── checkpoints/ # Saved model weights
 ├── docker-compose.yml
 ├── requirements.txt
 └── .env.example
 ```
 
-## 📊 Priority Scoring Features
+## Priority Scoring Features
 
 The ML model scores tasks using:
 
