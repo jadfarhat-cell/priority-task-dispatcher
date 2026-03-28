@@ -33,7 +33,7 @@ flowchart TD
     O --> Q[📈 Analytics Dashboard\nThroughput + SLA Tracking]
 ```
 
-## ✨ Features
+##  Features
 
 - ML-powered priority scoring based on deadline, complexity, and context
 - Multi-tiered worker pools (critical / standard / background)
@@ -59,7 +59,7 @@ flowchart TD
 | Messaging | Redis Pub/Sub |
 | Monitoring | Prometheus + Alertmanager |
 
-## 🚀 How to Run
+##  How to Run
 
 ```bash
 # 1. Clone and install
