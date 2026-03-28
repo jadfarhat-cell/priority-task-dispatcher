@@ -4,34 +4,7 @@ An intelligent task prioritization and dispatching system that uses machine lear
 
 ## Architecture
 
-```mermaid
-flowchart TD
- A[ Task Ingestion\nREST API / Webhooks / Queue] --> B[Task Parser\nValidation + Normalization]
- B --> C[Feature Extractor\nDeadline / Complexity / Dependencies]
- C --> D[ML Priority Scorer\nGradient Boosting / Neural Net]
- D --> E[Priority Score\n0.0 → 1.0]
- 
- E --> F[Priority Queue\nHeap-based Scheduler]
- 
- F --> G{Dispatcher Logic}
- G -->|High Priority| H[ Critical Worker Pool\nDedicated Resources]
- G -->|Medium Priority| I[ Standard Worker Pool\nCelery Workers]
- G -->|Low Priority| J[ Background Pool\nDeferred Execution]
- 
- H --> K[Task Executor]
- I --> K
- J --> K
- 
- K --> L{Task Result}
- L -- Success --> M[ Completion Handler\nCallback + Notify]
- L -- Failure --> N[ Retry Manager\nExp. Backoff]
- N --> F
- 
- M --> O[( PostgreSQL\nTask History + Metrics)]
- K --> P[(Redis\nReal-time Queue State)]
- 
- O --> Q[ Analytics Dashboard\nThroughput + SLA Tracking]
-```
+![Architecture Diagram](https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiBBWyBUYXNrIEluZ2VzdGlvblxuUkVTVCBBUEkgLyBXZWJob29rcyAvIFF1ZXVlXSAtLT4gQltUYXNrIFBhcnNlclxuVmFsaWRhdGlvbiArIE5vcm1hbGl6YXRpb25dCiBCIC0tPiBDW0ZlYXR1cmUgRXh0cmFjdG9yXG5EZWFkbGluZSAvIENvbXBsZXhpdHkgLyBEZXBlbmRlbmNpZXNdCiBDIC0tPiBEW01MIFByaW9yaXR5IFNjb3JlclxuR3JhZGllbnQgQm9vc3RpbmcgLyBOZXVyYWwgTmV0XQogRCAtLT4gRVtQcmlvcml0eSBTY29yZVxuMC4wIOKGkiAxLjBdCiAKIEUgLS0+IEZbUHJpb3JpdHkgUXVldWVcbkhlYXAtYmFzZWQgU2NoZWR1bGVyXQogCiBGIC0tPiBHe0Rpc3BhdGNoZXIgTG9naWN9CiBHIC0tPnxIaWdoIFByaW9yaXR5fCBIWyBDcml0aWNhbCBXb3JrZXIgUG9vbFxuRGVkaWNhdGVkIFJlc291cmNlc10KIEcgLS0+fE1lZGl1bSBQcmlvcml0eXwgSVsgU3RhbmRhcmQgV29ya2VyIFBvb2xcbkNlbGVyeSBXb3JrZXJzXQogRyAtLT58TG93IFByaW9yaXR5fCBKWyBCYWNrZ3JvdW5kIFBvb2xcbkRlZmVycmVkIEV4ZWN1dGlvbl0KIAogSCAtLT4gS1tUYXNrIEV4ZWN1dG9yXQogSSAtLT4gSwogSiAtLT4gSwogCiBLIC0tPiBMe1Rhc2sgUmVzdWx0fQogTCAtLSBTdWNjZXNzIC0tPiBNWyBDb21wbGV0aW9uIEhhbmRsZXJcbkNhbGxiYWNrICsgTm90aWZ5XQogTCAtLSBGYWlsdXJlIC0tPiBOWyBSZXRyeSBNYW5hZ2VyXG5FeHAuIEJhY2tvZmZdCiBOIC0tPiBGCiAKIE0gLS0+IE9bKCBQb3N0Z3JlU1FMXG5UYXNrIEhpc3RvcnkgKyBNZXRyaWNzKV0KIEsgLS0+IFBbKFJlZGlzXG5SZWFsLXRpbWUgUXVldWUgU3RhdGUpXQogCiBPIC0tPiBRWyBBbmFseXRpY3MgRGFzaGJvYXJkXG5UaHJvdWdocHV0ICsgU0xBIFRyYWNraW5nXQ==)
 
 ## Features
 
